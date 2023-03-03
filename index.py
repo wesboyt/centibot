@@ -32,11 +32,12 @@ reddit = praw.Reddit(
 )
 reddit.read_only = True
 index = faiss.IndexFlatL2(384)
-query = reddit.subreddit("realdaytrading").search("title:'Live Day Trading' author:AutoModerator", sort='new', limit=1000)
+query = reddit.subreddit("").search("", sort='new', limit=1000)
 dates = []
 ids = []
 comments = list(processQuery(query, dates, ids))
 index.add(model.encode(comments))
+
 faiss.write_index(index, "submissions.index")
 f = open("dates.json", "w")
 f.write(json.dumps(dates))
